@@ -9,13 +9,13 @@ import 'dart:ui' as ui show lerpDouble;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/material.dart' show Material;
 
 import 'framework.dart' show BuildContext;
-
-/// Defines the color, opacity, and size of icons.
+/// Defines the color, opacity, size of icons and the splashRadius of [IconButton].
 ///
-/// Used by [IconTheme] to control the color, opacity, and size of icons in a
-/// widget subtree.
+/// Used by [IconTheme] to control the color, opacity, size of icons, 
+/// and splashRadius of [IconButton] in a widget subtree.
 ///
 /// To obtain the current icon theme, use [IconTheme.of]. To convert an icon
 /// theme to a version with all the fields filled in, use [new
@@ -26,23 +26,28 @@ class IconThemeData with Diagnosticable {
   ///
   /// The opacity applies to both explicit and default icon colors. The value
   /// is clamped between 0.0 and 1.0.
-  const IconThemeData({this.color, double opacity, this.size}) : _opacity = opacity;
+  const IconThemeData(
+      {this.color, double opacity, this.size, this.iconButtonSplashRadius})
+      : _opacity = opacity;
 
   /// Creates an icon them with some reasonable default values.
   ///
-  /// The [color] is black, the [opacity] is 1.0, and the [size] is 24.0.
+  /// The [color] is black, the [opacity] is 1.0, the [size] is 24.0 and 
+  /// the [iconButtonSplashRadius] is [Material.defaultSplashRadius].
   const IconThemeData.fallback()
-    : color = const Color(0xFF000000),
-      _opacity = 1.0,
-      size = 24.0;
+      : color = const Color(0xFF000000),
+        _opacity = 1.0,
+        size = 24.0,
+        iconButtonSplashRadius = Material.defaultSplashRadius;
 
   /// Creates a copy of this icon theme but with the given fields replaced with
   /// the new values.
-  IconThemeData copyWith({ Color color, double opacity, double size }) {
+  IconThemeData copyWith({Color color, double opacity, double size, double iconButtonSplashRadius}) {
     return IconThemeData(
       color: color ?? this.color,
       opacity: opacity ?? this.opacity,
       size: size ?? this.size,
+      iconButtonSplashRadius: iconButtonSplashRadius ?? this.iconButtonSplashRadius,
     );
   }
 
@@ -50,12 +55,12 @@ class IconThemeData with Diagnosticable {
   /// replaced by the non-null parameters of the given icon theme. If the given
   /// icon theme is null, simply returns this icon theme.
   IconThemeData merge(IconThemeData other) {
-    if (other == null)
-      return this;
+    if (other == null) return this;
     return copyWith(
       color: other.color,
       opacity: other.opacity,
       size: other.size,
+      iconButtonSplashRadius: other.iconButtonSplashRadius,
     );
   }
 
@@ -78,7 +83,7 @@ class IconThemeData with Diagnosticable {
   IconThemeData resolve(BuildContext context) => this;
 
   /// Whether all the properties of this object are non-null.
-  bool get isConcrete => color != null && opacity != null && size != null;
+  bool get isConcrete => color != null && opacity != null && size != null && iconButtonSplashRadius != null;
 
   /// The default color for icons.
   final Color color;
@@ -90,6 +95,11 @@ class IconThemeData with Diagnosticable {
   /// The default size for icons.
   final double size;
 
+  /// The default [splashRadius] for [IconButton].
+  ///
+  /// Defaults to [Material.defaultSplashRadius].
+  final double iconButtonSplashRadius;
+
   /// Linearly interpolate between two icon theme data objects.
   ///
   /// {@macro dart.ui.shadow.lerp}
@@ -99,6 +109,7 @@ class IconThemeData with Diagnosticable {
       color: Color.lerp(a?.color, b?.color, t),
       opacity: ui.lerpDouble(a?.opacity, b?.opacity, t),
       size: ui.lerpDouble(a?.size, b?.size, t),
+      iconButtonSplashRadius: ui.lerpDouble(a?.iconButtonSplashRadius, b?.iconButtonSplashRadius, t),
     );
   }
 
@@ -109,11 +120,12 @@ class IconThemeData with Diagnosticable {
     return other is IconThemeData
         && other.color == color
         && other.opacity == opacity
-        && other.size == size;
+        && other.size == size
+        && other.iconButtonSplashRadius == iconButtonSplashRadius;
   }
 
   @override
-  int get hashCode => hashValues(color, opacity, size);
+  int get hashCode => hashValues(color, opacity, size, iconButtonSplashRadius);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -121,5 +133,6 @@ class IconThemeData with Diagnosticable {
     properties.add(ColorProperty('color', color, defaultValue: null));
     properties.add(DoubleProperty('opacity', opacity, defaultValue: null));
     properties.add(DoubleProperty('size', size, defaultValue: null));
+    properties.add(DoubleProperty('iconButtonSplashRadius', iconButtonSplashRadius, defaultValue: null));
   }
 }
