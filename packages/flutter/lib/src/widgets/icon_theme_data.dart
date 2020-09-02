@@ -9,8 +9,8 @@ import 'dart:ui' as ui show lerpDouble;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
-import 'package:flutter/material.dart' show Material;
 
+import '../material/material.dart' show Material;
 import 'framework.dart' show BuildContext;
 /// Defines the color, opacity, size of icons and the splashRadius of [IconButton].
 ///
