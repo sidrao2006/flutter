@@ -14,7 +14,7 @@ import 'package:flutter/material.dart' show Material;
 import 'framework.dart' show BuildContext;
 /// Defines the color, opacity, size of icons and the splashRadius of [IconButton].
 ///
-/// Used by [IconTheme] to control the color, opacity, size of icons, 
+/// Used by [IconTheme] to control the color, opacity, size of icons,
 /// and splashRadius of [IconButton] in a widget subtree.
 ///
 /// To obtain the current icon theme, use [IconTheme.of]. To convert an icon
@@ -32,7 +32,7 @@ class IconThemeData with Diagnosticable {
 
   /// Creates an icon them with some reasonable default values.
   ///
-  /// The [color] is black, the [opacity] is 1.0, the [size] is 24.0 and 
+  /// The [color] is black, the [opacity] is 1.0, the [size] is 24.0 and
   /// the [iconButtonSplashRadius] is [Material.defaultSplashRadius].
   const IconThemeData.fallback()
       : color = const Color(0xFF000000),
