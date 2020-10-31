@@ -345,6 +345,7 @@ class _BottomNavigationTile extends StatelessWidget {
     this.colorTween,
     this.flex,
     this.selected = false,
+    this.enableFeedback = true,
     required this.selectedLabelStyle,
     required this.unselectedLabelStyle,
     required this.selectedIconTheme,
@@ -359,6 +360,7 @@ class _BottomNavigationTile extends StatelessWidget {
          assert(selected != null),
          assert(selectedLabelStyle != null),
          assert(unselectedLabelStyle != null),
+         assert(enableFeedback != null),
          assert(mouseCursor != null);
 
   final BottomNavigationBarType type;
@@ -376,6 +378,7 @@ class _BottomNavigationTile extends StatelessWidget {
   final String? indexLabel;
   final bool showSelectedLabels;
   final bool showUnselectedLabels;
+  final bool enableFeedback;
   final MouseCursor mouseCursor;
 
   @override
@@ -458,6 +461,7 @@ class _BottomNavigationTile extends StatelessWidget {
     Widget result = InkResponse(
       onTap: onTap,
       mouseCursor: mouseCursor,
+      enableFeedback: enableFeedback,
       child: Padding(
         padding: EdgeInsets.only(top: topPadding, bottom: bottomPadding),
         child: Column(
