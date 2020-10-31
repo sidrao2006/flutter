@@ -194,8 +194,10 @@ class BottomNavigationBar extends StatefulWidget {
     this.showSelectedLabels,
     this.showUnselectedLabels,
     this.mouseCursor,
+    this.enableFeedback = true,
   }) : assert(items != null),
        assert(items.length >= 2),
+       assert(enableFeedback != null),
        assert(
         items.every((BottomNavigationBarItem item) => item.title != null) ||
         items.every((BottomNavigationBarItem item) => item.label != null),
@@ -322,6 +324,14 @@ class BottomNavigationBar extends StatefulWidget {
 
   /// Whether the labels are shown for the selected [BottomNavigationBarItem].
   final bool? showSelectedLabels;
+
+  /// Whether detected gestures should provide acoustic and/or haptic feedback.
+  ///
+  /// For example, on Android a tap will produce a clicking sound and a
+  /// long-press will produce a short vibration, when feedback is enabled.
+  /// 
+  /// Defaults to true.
+  final bool enableFeedback;
 
   /// The cursor for a mouse pointer when it enters or is hovering over the
   /// tiles.
@@ -899,6 +909,7 @@ class _BottomNavigationBarState extends State<BottomNavigationBar> with TickerPr
         showUnselectedLabels: widget.showUnselectedLabels ?? bottomTheme.showUnselectedLabels ?? _defaultShowUnselected,
         indexLabel: localizations.tabLabel(tabIndex: i + 1, tabCount: widget.items.length),
         mouseCursor: effectiveMouseCursor,
+        enableFeedback: widget.enableFeedback,
       ));
     }
     return tiles;
